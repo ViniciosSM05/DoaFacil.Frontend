@@ -3,6 +3,7 @@
     <v-autocomplete
       density="comfortable"
       color="primary"
+      no-data-text="Não foi encontrado nenhuma cidade"
       :disabled="disabled"
       :label="label"
       :items="cidades"

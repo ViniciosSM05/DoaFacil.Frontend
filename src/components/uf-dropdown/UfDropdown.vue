@@ -3,6 +3,7 @@
     <v-autocomplete
       color="primary"
       density="comfortable"
+      no-data-text="Não foi encontrado nenhum estado"
       :label="label"
       :item-value="'id'"
       :item-title="'nome'"

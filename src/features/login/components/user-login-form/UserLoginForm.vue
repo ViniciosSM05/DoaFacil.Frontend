@@ -21,7 +21,7 @@
         :type="passwordVisible ? 'text' : 'password'"
         density="compact"
         color="primary"
-        placeholder="Entre com sua senha"
+        placeholder="entre com sua senha"
         prepend-inner-icon="mdi-lock-outline"
         v-model="store.state.user.senha"
         @click:append-inner="passwordVisible = !passwordVisible"
