@@ -21,6 +21,7 @@ import { onBeforeMount, ref, watch } from 'vue'
 import type { CidadeDropdownProps } from './types/CidadeDropdownProps'
 import type { CidadeData } from './types/CidadeData'
 import { distinctBy } from '@/utils/array.utils'
+import type { CidadeDropdownExpose } from './types/CidadeDropdownExpose'
 
 const URL_IBGE_BY_UF = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados/{uf}/distritos'
 const emit = defineEmits<{
@@ -58,4 +59,8 @@ watch(
 )
 
 onBeforeMount(() => refresh())
+
+defineExpose<CidadeDropdownExpose>({
+  getCidades: () => [...cidades.value]
+})
 </script>

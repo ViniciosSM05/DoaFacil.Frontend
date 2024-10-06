@@ -15,15 +15,25 @@
                 :error="hasError('Nome')"
                 :error-messages="getErrorMessages('Nome')"
               />
-              <v-text-field
-                density="comfortable"
-                color="primary"
-                label="CPF"
-                v-maska="'###.###.###-##'"
-                v-model="store.state.toAdd.cpfCnpj"
-                :error="hasError('CpfCnpj')"
-                :error-messages="getErrorMessages('CpfCnpj')"
-              />
+              <div class="container-cpf-cnpj">
+                <div class="radio">
+                  <v-radio-group v-model="tipoPessoa" inline color="primary">
+                    <v-radio :value="EnumTipoPessoa.Fisica" label="Física" />
+                    <v-radio :value="EnumTipoPessoa.Juridica" label="Jurídica" />
+                  </v-radio-group>
+                </div>
+                <div class="text-field">
+                  <v-text-field
+                    density="comfortable"
+                    color="primary"
+                    :label="isPessoaFisica ? 'CPF' : 'CNPJ'"
+                    v-maska="isPessoaFisica ? '###.###.###-##' : '##.###.###/####-##'"
+                    v-model="store.state.toAdd.cpfCnpj"
+                    :error="hasError('CpfCnpj')"
+                    :error-messages="getErrorMessages('CpfCnpj')"
+                  />
+                </div>
+              </div>
               <v-text-field
                 density="comfortable"
                 color="primary"
@@ -73,6 +83,7 @@
                 v-model="store.state.toAdd.endereco.cep"
                 :error="hasError('Cep')"
                 :error-messages="getErrorMessages('Cep')"
+                @blur="handleCep(($event.target as HTMLInputElement).value)"
               />
               <v-text-field
                 density="comfortable"
@@ -120,8 +131,14 @@
           </v-row>
         </v-container>
         <v-card-actions>
+          <RouterLink to="/user/login">
+            <v-btn color="primary" :loading="store.state.loadingRegister">
+              <v-icon class="ml-0 pr-4" icon="mdi-chevron-left" end />
+              VOLTAR
+            </v-btn>
+          </RouterLink>
           <v-spacer />
-          <v-btn color="primary" @click="store.register" :loading="store.state.loadingRegister">
+          <v-btn color="primary" @click="register" :loading="store.state.loadingRegister">
             CONCLUIR CADASTRO
             <v-icon icon="mdi-chevron-right" end />
           </v-btn>
@@ -134,14 +151,19 @@
 
 <script setup lang="ts">
 import { vMaska } from 'maska/vue'
-import { ref } from 'vue'
+import { EnumTipoPessoa } from '@/enums/pessoa/EnumTipoPessoa'
+import { useErrorFiedService } from '@/services/error-field/error-field-service'
 import { useUserRegisterStore } from '../../store/user-register-store'
+import { computed, onUnmounted, ref, watch } from 'vue'
 import type { UfDropdownExpose } from '@/components/uf-dropdown/types/UfDropdownExpose'
 import UfDropdown from '@/components/uf-dropdown/UfDropdown.vue'
 import CidadeDropdown from '@/components/cidade-dropdown/CidadeDropdown.vue'
-import { useErrorFiedService } from '@/services/error-field/error-field-service'
+import { useNotificationStore } from '@/stores/notification/notification-store'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const store = useUserRegisterStore()
+const notificationStore = useNotificationStore()
 
 const ufDropdown = ref<UfDropdownExpose>()
 
@@ -156,4 +178,26 @@ const ufChanged = (id: string | null | undefined) => {
   store.setUfId(id ?? null)
   store.setCidadeNome('')
 }
+
+const handleCep = (cep: string) => {
+  const ufs = ufDropdown.value?.getUfs() ?? []
+  store.handleCep(cep, ufs, ({ uf }) => (ufSigla.value = uf))
+}
+
+const tipoPessoa = ref(EnumTipoPessoa.Fisica)
+const isPessoaFisica = computed(() => tipoPessoa.value === EnumTipoPessoa.Fisica)
+
+watch(tipoPessoa, () => store.setCpfCnpj(''))
+
+const register = () => {
+  store.register(
+    () => {
+      notificationStore.showNotificationSuccess('Cadastro concluído com sucesso!')
+      setTimeout(() => router.push('/user/login'), 2000)
+    },
+    () => notificationStore.showNotificationError('Por favor, revise os campos!')
+  )
+}
+
+onUnmounted(() => store.destroy())
 </script>
