@@ -1,13 +1,14 @@
 <template>
-  <div class="uf-dropdown">
+  <div class="categoria-dropdown">
     <v-autocomplete
       color="primary"
-      no-data-text="Não foi encontrado nenhum estado"
+      no-data-text="Não foi encontrado nenhuma categoria"
+      :placeholder="placeholder"
       :density="density"
       :label="label"
       :item-value="'id'"
       :item-title="'nome'"
-      :items="ufs"
+      :items="categorias"
       :loading="loading"
       :model-value="value"
       :error="error"
@@ -16,41 +17,37 @@
     />
   </div>
 </template>
-<style lang="less" scoped src="./uf-dropdown.less"></style>
+<style lang="less" scoped src="./categoria-dropdown.less"></style>
 
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue'
+import type { CategoriaData } from './types/CategoriaData'
 import { useHttpService } from '@/services/http/http-service'
 import type { ResponseApiT } from '@/types/api/ResponseApi'
-import type { UfData } from '@/components/uf-dropdown/types/UfData'
-import type { UfDropdownProps } from './types/UfDropdownProps'
-import type { UfDropdownExpose } from './types/UfDropdownExpose'
+import type { CategoriaDropdownProps } from './types/CategoriaDropdownProps'
 
 const emit = defineEmits<{
   (e: 'change', value: string | null | undefined): void
 }>()
 
-const props = withDefaults(defineProps<UfDropdownProps>(), {
-  label: 'Estado',
-  density: 'comfortable'
+const props = withDefaults(defineProps<CategoriaDropdownProps>(), {
+  label: 'Categorias',
+  density: 'comfortable',
+  placeholder: ''
 })
 
-const httpService = useHttpService('ufs')
+const categorias = ref<CategoriaData[]>([])
 
-const ufs = ref<UfData[]>([])
+const httpService = useHttpService('categorias')
 
 const loading = ref(false)
 
 onBeforeMount(() => {
   loading.value = true
   httpService
-    .get<ResponseApiT<UfData[]>>('')
-    .then(({ data }) => (ufs.value = data.data))
-    .catch((err) => console.error('Erro ao tentar recuperar ufs', err))
+    .get<ResponseApiT<CategoriaData[]>>('')
+    .then(({ data }) => (categorias.value = data.data))
+    .catch((err) => console.error('Erro ao tentar recuperar categorias', err))
     .finally(() => (loading.value = false))
-})
-
-defineExpose<UfDropdownExpose>({
-  getUfs: () => [...ufs.value]
 })
 </script>

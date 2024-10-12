@@ -1,3 +1,3 @@
 import type { DropdownBaseProps } from '@/types/dropdown/DropdownBaseProps'
 
-export interface UfDropdownProps extends DropdownBaseProps {}
+export interface CategoriaDropdownProps extends DropdownBaseProps {}

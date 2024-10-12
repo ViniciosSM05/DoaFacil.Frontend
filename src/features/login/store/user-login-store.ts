@@ -3,10 +3,12 @@ import { ref } from 'vue'
 import { useUserRegisterApi } from '../api/user-login-api'
 import type { UserLoginState } from '../types/UserLoginState'
 import { cloneDeep } from 'lodash'
+import { useRouter } from 'vue-router'
 
 const STORE_NAME = 'userLogin'
 export const useUserLoginStore = defineStore(STORE_NAME, () => {
   const api = useUserRegisterApi()
+  const router = useRouter()
 
   const _defaultState: UserLoginState = {
     loading: false,
@@ -29,6 +31,7 @@ export const useUserLoginStore = defineStore(STORE_NAME, () => {
           localStorage.setItem('dataEHoraDeExpiracao', data.dataEHoraDeExpiracao)
           localStorage.setItem('token', data.token)
           localStorage.setItem('user', JSON.stringify(data.user))
+          router.push({ name: 'home' })
           callbackSuccess && callbackSuccess()
         }
       })

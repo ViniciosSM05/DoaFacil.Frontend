@@ -10,13 +10,17 @@ onBeforeMount(() => defineAxios())
 </script>
 
 <template>
-  <v-snackbar
-    location="top right"
-    v-model="notificationStore.state.visible"
-    :timeout="notificationStore.state.timeoutInSeconds * 1000"
-    :color="notificationStore.state.type"
-  >
-    {{ notificationStore.state.message }}
-  </v-snackbar>
-  <RouterView />
+  <div class="doa-facil-app">
+    <v-snackbar
+      location="top right"
+      v-model="notificationStore.state.visible"
+      :timeout="notificationStore.state.timeoutInSeconds * 1000"
+      :color="notificationStore.state.type"
+    >
+      {{ notificationStore.state.message }}
+    </v-snackbar>
+    <v-app>
+      <RouterView />
+    </v-app>
+  </div>
 </template>

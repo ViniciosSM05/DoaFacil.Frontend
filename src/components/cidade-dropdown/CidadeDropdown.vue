@@ -1,9 +1,9 @@
 <template>
   <div class="cidade-dropdown">
     <v-autocomplete
-      density="comfortable"
       color="primary"
       no-data-text="Não foi encontrado nenhuma cidade"
+      :density="density"
       :disabled="disabled"
       :label="label"
       :items="cidades"
@@ -30,7 +30,8 @@ const emit = defineEmits<{
 }>()
 
 const props = withDefaults(defineProps<CidadeDropdownProps>(), {
-  label: 'Cidade'
+  label: 'Cidade',
+  density: 'comfortable'
 })
 
 const cidades = ref<string[]>([])

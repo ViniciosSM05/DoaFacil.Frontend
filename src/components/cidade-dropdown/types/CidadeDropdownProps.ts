@@ -1,8 +1,5 @@
-export interface CidadeDropdownProps {
-  label?: string
-  value?: string | null
+import type { DropdownBaseProps } from '@/types/dropdown/DropdownBaseProps'
+
+export interface CidadeDropdownProps extends DropdownBaseProps {
   uf?: string | null
-  disabled?: boolean
-  error?: boolean
-  errorMessages?: string[]
 }
