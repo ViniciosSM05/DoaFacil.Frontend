@@ -37,7 +37,7 @@
         <v-card-text class="text-center">
           <RouterLink
             class="text-primary text-decoration-none"
-            to="/user/register"
+            to="/register"
             rel="noopener noreferrer"
           >
             Crie sua conta <v-icon icon="mdi-chevron-right" />
@@ -51,12 +51,11 @@
 
 <script setup lang="ts">
 import { onUnmounted, ref } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { useUserLoginStore } from '../../store/user-login-store'
 import { useErrorFiedService } from '@/services/error-field/error-field-service'
 import { useNotificationStore } from '@/stores/notification/notification-store'
 
-const router = useRouter()
 const store = useUserLoginStore()
 const notificationStore = useNotificationStore()
 const { hasError, getErrorMessages } = useErrorFiedService(() => store.state.errors)

@@ -14,7 +14,7 @@
           <v-btn variant="text" to="/contato">Contato</v-btn>
           <v-btn variant="text" class="d-flex align-center">
             <v-icon class="mr-1">mdi-account</v-icon>
-            <span>Vinicios</span>
+            <span>{{ generalStore.user?.nome ?? '' }}</span>
           </v-btn>
           <v-btn color="primary" @click="generalStore.logout">Sair</v-btn>
         </v-row>

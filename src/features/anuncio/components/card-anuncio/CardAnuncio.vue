@@ -4,7 +4,7 @@
       <v-img :src="img" height="200px" class="anuncio-img" />
 
       <v-card-text>
-        <h3 class="anuncio-title font-weight-bold">{{ titulo }}</h3>
+        <p class="anuncio-title font-weight-bold">{{ titulo }}</p>
 
         <div class="anuncio-categoria">
           <span>{{ nomeCategoria }}</span> | <span>Código: {{ insertZeroBefore(codigo) }}</span>
@@ -21,8 +21,8 @@
 
         <div class="anuncio-meta">
           <div class="d-flex justify-space-between">
-            <span>Meta: {{ formatCurrency(meta) }}</span>
             <span>Doado: {{ formatCurrency(doado) }}</span>
+            <span>Meta: {{ formatCurrency(meta) }}</span>
           </div>
 
           <v-progress-linear

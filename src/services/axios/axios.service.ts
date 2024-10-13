@@ -23,12 +23,8 @@ export const defineAxios = () => {
       return response
     },
     (error) => {
-      if (error.response) {
-        if (error.response.status === EnumStatusCode.UNAUTHORIZED) {
-          generalStore.logout()
-          router.push('/user/login')
-        }
-      }
+      if (error.response && error.response.status === EnumStatusCode.UNAUTHORIZED)
+        generalStore.logout()
       return Promise.reject(error)
     }
   )

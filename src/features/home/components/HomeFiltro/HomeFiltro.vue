@@ -9,6 +9,7 @@
               outlined
               class="mx-2"
               color="primary"
+              prepend-inner-icon="mdi-magnify"
               :style="{ width: '100%' }"
             ></v-text-field>
           </v-col>
@@ -34,12 +35,10 @@
 <style lang="less" scoped src="./home-filtro.less"></style>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import CategoriaDropdown from '@/components/categoria-dropdown/CategoriaDropdown.vue'
 
 const applyFilters = () => {
   // Lógica para aplicar filtros nos anúncios
   console.log('Filtros aplicados')
 }
-const categories = ref(['Saúde', 'Educação', 'Empreendedorismo'])
 </script>

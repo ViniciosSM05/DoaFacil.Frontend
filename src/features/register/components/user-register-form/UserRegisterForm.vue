@@ -18,8 +18,8 @@
               <div class="container-cpf-cnpj">
                 <div class="radio">
                   <v-radio-group v-model="tipoPessoa" inline color="primary">
-                    <v-radio :value="EnumTipoPessoa.Fisica" label="Física" />
-                    <v-radio :value="EnumTipoPessoa.Juridica" label="Jurídica" />
+                    <v-radio color="primary" :value="EnumTipoPessoa.Fisica" label="Física" />
+                    <v-radio color="primary" :value="EnumTipoPessoa.Juridica" label="Jurídica" />
                   </v-radio-group>
                 </div>
                 <div class="text-field">
@@ -131,7 +131,7 @@
           </v-row>
         </v-container>
         <v-card-actions>
-          <RouterLink to="/user/login">
+          <RouterLink to="/login">
             <v-btn color="primary" :loading="store.state.loadingRegister">
               <v-icon class="ml-0 pr-4" icon="mdi-chevron-left" end />
               VOLTAR
@@ -193,7 +193,7 @@ const register = () => {
   store.register(
     () => {
       notificationStore.showNotificationSuccess('Cadastro concluído com sucesso!')
-      setTimeout(() => router.push('/user/login'), 2000)
+      setTimeout(() => router.push({ name: 'login' }), 2000)
     },
     () => notificationStore.showNotificationError('Por favor, revise os campos!')
   )

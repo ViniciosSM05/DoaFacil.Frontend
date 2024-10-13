@@ -16,7 +16,7 @@
     </v-row>
     <v-row justify="end">
       <v-col cols="auto">
-        <router-link to="/ver-mais" class="text-decoration-none">
+        <router-link to="/anuncios" class="text-decoration-none">
           <span class="text-primary font-weight-bold small">
             Ver mais
             <v-icon start small>mdi-arrow-right</v-icon>
