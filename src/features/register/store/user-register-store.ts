@@ -60,7 +60,10 @@ export const useUserRegisterStore = defineStore(STORE_NAME, () => {
       })
       .then(({ data }) => {
         state.value.errors = []
-        data.success && callbackSuccess && callbackSuccess()
+        if (data.success) {
+          destroy()
+          callbackSuccess && callbackSuccess()
+        }
       })
       .catch((resp) => {
         state.value.errors = resp.response?.data?.fieldMessages ?? []

@@ -1,7 +1,11 @@
 <template>
   <div class="card-anuncio">
     <v-card class="info-card" max-width="400">
-      <v-img :src="img" height="200px" class="anuncio-img" />
+      <v-img :src="imagemBase64" height="200px" class="anuncio-img">
+        <v-btn v-show="anuncioPessoal" icon class="edit-button" elevation="2" color="primary">
+          <v-icon :size="13">mdi-pencil</v-icon>
+        </v-btn>
+      </v-img>
 
       <v-card-text>
         <p class="anuncio-title font-weight-bold">{{ titulo }}</p>
@@ -40,10 +44,10 @@
 
 <script setup lang="ts">
 import { formatCurrency } from '@/utils/currency.utils'
-import type { CardAnuncioProps } from '../../types/CardAnuncioProps'
 import { insertZeroBefore } from '@/utils/number.utils'
+import type { CardAnuncioProps } from '../../types/CardAnuncioProps'
 
-const props = defineProps<CardAnuncioProps>()
+defineProps<CardAnuncioProps>()
 
 const calculateProgress = (donated: number, goal: number) => {
   return Math.min((donated / goal) * 100, 100)

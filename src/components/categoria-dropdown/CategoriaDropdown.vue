@@ -2,6 +2,7 @@
   <div class="categoria-dropdown">
     <v-autocomplete
       color="primary"
+      clearable
       no-data-text="Não foi encontrado nenhuma categoria"
       :placeholder="placeholder"
       :density="density"

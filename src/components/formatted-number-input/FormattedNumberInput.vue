@@ -7,6 +7,8 @@
       color="primary"
       @input="update"
       placeholder="0,00"
+      :error="error"
+      :error-messages="errorMessages"
     />
   </div>
 </template>

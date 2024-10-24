@@ -9,33 +9,62 @@
       </p>
 
       <v-form>
-        <FormattedNumberInput v-model="form.meta" label="Meta" color="primary" />
+        <FormattedNumberInput
+          v-model="store.state.form.meta"
+          label="Meta"
+          color="primary"
+          :error="hasError('Meta')"
+          :error-messages="getErrorMessages('Meta')"
+        />
 
-        <v-text-field v-model="form.titulo" label="Título" class="mb-4" color="primary" />
+        <v-text-field
+          v-model="store.state.form.titulo"
+          label="Título"
+          class="mb-4"
+          color="primary"
+          :error="hasError('Titulo')"
+          :error-messages="getErrorMessages('Titulo')"
+        />
 
         <v-textarea
-          v-model="form.descricao"
+          v-model="store.state.form.descricao"
           label="Descrição"
           class="mb-4"
           color="primary"
           rows="3"
+          :error="hasError('Descricao')"
+          :error-messages="getErrorMessages('Descricao')"
         />
 
         <CategoriaDropdown
-          v-model="form.categoria"
+          :value="store.state.form.categoriaId"
+          @change="store.setFormCategoriaId($event ?? null)"
           label="Categoria"
           class="mb-4"
           color="primary"
+          :error="hasError('CategoriaId')"
+          :error-messages="getErrorMessages('CategoriaId')"
         />
 
-        <v-text-field v-model="form.pix" label="Chave Pix" class="mb-4" color="primary" />
+        <v-text-field
+          v-model="store.state.form.chavePix"
+          label="Chave Pix"
+          class="mb-4"
+          color="primary"
+          :error="hasError('ChavePix')"
+          :error-messages="getErrorMessages('ChavePix')"
+        />
 
         <v-file-input
-          v-model="form.imagem"
+          v-model="imgFile"
           label="Carregar Imagem"
           class="mb-4"
           color="primary"
           accept="image/*"
+          clearable
+          @click:clear="clearImagem"
+          :error="hasError('Base64')"
+          :error-messages="getErrorMessages('Base64')"
         />
 
         <p class="text-caption mb-4">
@@ -50,20 +79,53 @@
 <style lang="less" scoped src="./form-anuncio.less"></style>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onUnmounted, ref, watch } from 'vue'
 import CategoriaDropdown from '@/components/categoria-dropdown/CategoriaDropdown.vue'
 import FormattedNumberInput from '@/components/formatted-number-input/FormattedNumberInput.vue'
+import { useAnuncioFormStore } from '../../store/anuncio-form-store'
+import { useErrorFiedService } from '@/services/error-field/error-field-service'
+import { useNotificationStore } from '@/stores/notification/notification-store'
+import router from '@/router'
 
-const form = ref({
-  meta: 0,
-  titulo: '',
-  descricao: '',
-  categoria: '',
-  pix: '',
-  imagem: null as File | null
+const store = useAnuncioFormStore()
+const notificationStore = useNotificationStore()
+const { getErrorMessages, hasError } = useErrorFiedService(() => store.state.errors)
+
+const imgFile = ref<File | null>(null)
+
+watch(imgFile, (newFile) => {
+  if (newFile) {
+    convertToBase64(newFile)
+    store.setFormImagemNome(newFile.name)
+    store.setFormImagemTipo(newFile.type)
+  } else clearImagem()
 })
 
-const salvar = () => {
-  console.log('Dados do formulário:', form.value)
+const convertToBase64 = (file: File) => {
+  const reader = new FileReader()
+  reader.readAsDataURL(file)
+  reader.onload = () => {
+    store.setFormImagemBase64(reader.result?.toString() ?? null)
+  }
+  reader.onerror = (error) => console.error('Erro ao ler o arquivo:', error)
 }
+
+const clearImagem = () => {
+  store.setFormImagemBase64(null)
+  store.setFormImagemNome(null)
+  store.setFormImagemTipo(null)
+  imgFile.value = null
+}
+
+const salvar = () =>
+  store.add(
+    () => {
+      clearImagem()
+      notificationStore.showNotificationSuccess('Anúncio cadastrado com sucesso!')
+      setTimeout(() => router.push({ name: 'anuncios' }), 2000)
+    },
+    () => notificationStore.showNotificationError('Por favor, revise os campos!')
+  )
+
+onUnmounted(() => store.destroy())
 </script>

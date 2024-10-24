@@ -8,8 +8,8 @@
           </v-app-bar-title>
 
           <v-btn variant="text" to="/">Home</v-btn>
+          <v-btn variant="text" to="/cadastrar-anuncio">Criar anúncio</v-btn>
           <v-btn variant="text" to="/anuncios">Anúncios</v-btn>
-          <v-btn variant="text" to="/como-funciona">Como Funciona</v-btn>
           <v-btn variant="text" to="/sobre">Sobre</v-btn>
           <v-btn variant="text" to="/contato">Contato</v-btn>
           <v-btn variant="text" class="d-flex align-center">

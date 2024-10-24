@@ -21,4 +21,10 @@
 
 <script setup lang="ts">
 import { HomeInfo, HomeFiltro, HomeAnuncios } from '@/features/home'
+import { useHomeStore } from '@/features/home'
+import { onUnmounted } from 'vue'
+
+const store = useHomeStore()
+
+onUnmounted(() => store.destroy())
 </script>

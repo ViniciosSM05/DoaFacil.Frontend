@@ -2,29 +2,29 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { EnumFiltroData } from '@/enums/filtro/EnumFiltroData'
 import { cloneDeep } from 'lodash'
-import { useAnuncioApi } from '../api/anuncio-api'
-import type { AnuncioFiltro } from '../types/AnuncioFiltro'
-import type { AnuncioListagemState } from '../types/AnuncioListagemState'
+import { useAnuncioApi } from '@/features/anuncio'
+import type { AnuncioFiltro } from '@/features/anuncio'
+import type { HomeState } from '../types/HomeState'
 
-const STORE_NAME = 'anuncioListagem'
-export const useAnuncioListagemStore = defineStore(STORE_NAME, () => {
+const STORE_NAME = 'home'
+export const useHomeStore = defineStore(STORE_NAME, () => {
   const api = useAnuncioApi()
 
   const _defaultFiltro: AnuncioFiltro = {
     categoriaId: null,
     somenteAnuncioPessoal: false,
-    take: null,
+    take: 3,
     data: EnumFiltroData.Qualquer,
     search: null
   }
 
-  const _defaultState: AnuncioListagemState = {
+  const _defaultState: HomeState = {
     filtro: cloneDeep(_defaultFiltro),
     anuncios: [],
     loadingGetAnuncios: false
   }
 
-  const state = ref<AnuncioListagemState>(cloneDeep(_defaultState))
+  const state = ref<HomeState>(cloneDeep(_defaultState))
 
   const setFiltroCategoriaId = (categoriaId: string | null) =>
     (state.value.filtro.categoriaId = categoriaId)

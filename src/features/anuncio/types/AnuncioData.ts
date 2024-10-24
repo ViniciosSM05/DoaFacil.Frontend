@@ -1,5 +1,8 @@
-export interface CardAnuncioProps {
+export interface AnuncioData {
   id: string
+  imagemNome: string
+  imagemBytes: Uint8Array
+  imagemTipo: string
   imagemBase64: string
   titulo: string
   nomeCategoria: string

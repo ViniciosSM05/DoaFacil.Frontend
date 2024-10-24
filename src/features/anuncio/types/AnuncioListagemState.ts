@@ -1,12 +1,8 @@
-import type { EnumFiltroData } from '@/enums/filtro/EnumFiltroData'
+import type { AnuncioFiltro } from './AnuncioFiltro'
+import type { AnuncioData } from './AnuncioData'
 
 export interface AnuncioListagemState {
-  filtro: FiltroAnuncioListagem
-  anuncios: []
-}
-
-export interface FiltroAnuncioListagem {
-  search: string | null
-  categoriaId: string | null
-  data: EnumFiltroData
+  filtro: AnuncioFiltro
+  anuncios: AnuncioData[]
+  loadingGetAnuncios: boolean
 }
