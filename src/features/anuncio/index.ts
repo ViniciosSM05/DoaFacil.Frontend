@@ -4,6 +4,7 @@ import ListagemAnuncios from './components/listagem-anuncios/ListagemAnuncios.vu
 import FormAnuncio from './components/form-anuncio/FormAnuncio.vue'
 import { useAnuncioApi } from './api/anuncio-api'
 import { useAnuncioListagemStore } from './store/anuncio-listagem-store'
+import { useAnuncioFormStore } from './store/anuncio-form-store'
 import type { CardAnuncioProps } from './types/CardAnuncioProps'
 import type { AnuncioFiltro } from './types/AnuncioFiltro'
 import type { AnuncioData } from './types/AnuncioData'
@@ -14,6 +15,7 @@ export {
   ListagemAnuncios,
   FormAnuncio,
   useAnuncioApi,
+  useAnuncioFormStore,
   useAnuncioListagemStore,
   type CardAnuncioProps,
   type AnuncioFiltro,

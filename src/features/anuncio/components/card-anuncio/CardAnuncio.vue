@@ -2,7 +2,21 @@
   <div class="card-anuncio">
     <v-card class="info-card" max-width="400">
       <v-img :src="imagemBase64" height="200px" class="anuncio-img">
-        <v-btn v-show="anuncioPessoal" icon class="edit-button" elevation="2" color="primary">
+        <v-btn
+          v-show="anuncioPessoal"
+          icon
+          class="edit-button"
+          elevation="2"
+          color="primary"
+          @click="
+            $router.push({
+              name: 'cadastrarAnuncio',
+              params: {
+                id
+              }
+            })
+          "
+        >
           <v-icon :size="13">mdi-pencil</v-icon>
         </v-btn>
       </v-img>

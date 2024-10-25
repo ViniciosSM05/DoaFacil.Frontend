@@ -1,6 +1,6 @@
 <template>
   <div class="cadastrar-anuncio-view">
-    <FormAnuncio />
+    <FormAnuncio :id="$route.params.id?.toString() ?? undefined" />
   </div>
 </template>
 <style lang="less" scoped src="./cadastrar-anuncio-view.less"></style>

@@ -63,7 +63,7 @@ const router = createRouter({
       ]
     },
     {
-      path: '/cadastrar-anuncio',
+      path: '/cadastrar-anuncio/:id?',
       component: LayoutAuthenticated,
       children: [
         {

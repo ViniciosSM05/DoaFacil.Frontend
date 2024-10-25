@@ -45,6 +45,8 @@ export const useAnuncioListagemStore = defineStore(STORE_NAME, () => {
       .finally(() => (state.value.loadingGetAnuncios = false))
   }
 
+  const setFiltro = (filtro: AnuncioFiltro) => (state.value.filtro = filtro)
+
   const destroy = () => (state.value = cloneDeep(_defaultState))
 
   return {
@@ -52,6 +54,7 @@ export const useAnuncioListagemStore = defineStore(STORE_NAME, () => {
     setFiltroCategoriaId,
     limparFiltros,
     refreshAnuncios,
+    setFiltro,
     destroy
   }
 })

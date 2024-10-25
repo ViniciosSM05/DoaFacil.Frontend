@@ -5,6 +5,7 @@
         <v-row>
           <v-col>
             <v-text-field
+              v-model="store.state.filtro.search"
               label="Buscar anúncios"
               outlined
               class="mx-2"
@@ -14,7 +15,12 @@
             ></v-text-field>
           </v-col>
           <v-col>
-            <CategoriaDropdown density="default" placeholder="Todas as categorias" />
+            <CategoriaDropdown
+              density="default"
+              placeholder="Todas as categorias"
+              :value="store.state.filtro.categoriaId"
+              @change="store.setFiltroCategoriaId($event ?? null)"
+            />
           </v-col>
           <v-col>
             <v-btn
@@ -36,9 +42,19 @@
 
 <script setup lang="ts">
 import CategoriaDropdown from '@/components/categoria-dropdown/CategoriaDropdown.vue'
+import { useHomeStore } from '../../store/home-store'
+import { useAnuncioListagemStore } from '@/features/anuncio'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const store = useHomeStore()
+const anunciosListagemStore = useAnuncioListagemStore()
 
 const applyFilters = () => {
-  // Lógica para aplicar filtros nos anúncios
-  console.log('Filtros aplicados')
+  anunciosListagemStore.setFiltro({
+    ...store.state.filtro,
+    take: null
+  })
+  router.push({ name: 'anuncios' })
 }
 </script>

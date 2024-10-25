@@ -79,13 +79,17 @@
 <style lang="less" scoped src="./form-anuncio.less"></style>
 
 <script setup lang="ts">
-import { onUnmounted, ref, watch } from 'vue'
+import router from '@/router'
+import { onBeforeMount, onUnmounted, ref, watch } from 'vue'
+import { base64ToFile, convertToBase64 } from '@/utils/img.utils'
+import { useErrorFiedService } from '@/services/error-field/error-field-service'
+import { useAnuncioFormStore } from '../../store/anuncio-form-store'
+import { useNotificationStore } from '@/stores/notification/notification-store'
+import type { FormAnuncioProps } from '../../types/FormAnuncioProps'
 import CategoriaDropdown from '@/components/categoria-dropdown/CategoriaDropdown.vue'
 import FormattedNumberInput from '@/components/formatted-number-input/FormattedNumberInput.vue'
-import { useAnuncioFormStore } from '../../store/anuncio-form-store'
-import { useErrorFiedService } from '@/services/error-field/error-field-service'
-import { useNotificationStore } from '@/stores/notification/notification-store'
-import router from '@/router'
+
+const props = defineProps<FormAnuncioProps>()
 
 const store = useAnuncioFormStore()
 const notificationStore = useNotificationStore()
@@ -95,20 +99,11 @@ const imgFile = ref<File | null>(null)
 
 watch(imgFile, (newFile) => {
   if (newFile) {
-    convertToBase64(newFile)
+    convertToBase64(newFile).then(store.setFormImagemBase64)
     store.setFormImagemNome(newFile.name)
     store.setFormImagemTipo(newFile.type)
   } else clearImagem()
 })
-
-const convertToBase64 = (file: File) => {
-  const reader = new FileReader()
-  reader.readAsDataURL(file)
-  reader.onload = () => {
-    store.setFormImagemBase64(reader.result?.toString() ?? null)
-  }
-  reader.onerror = (error) => console.error('Erro ao ler o arquivo:', error)
-}
 
 const clearImagem = () => {
   store.setFormImagemBase64(null)
@@ -119,13 +114,23 @@ const clearImagem = () => {
 
 const salvar = () =>
   store.add(
-    () => {
+    (updated) => {
       clearImagem()
-      notificationStore.showNotificationSuccess('Anúncio cadastrado com sucesso!')
+      notificationStore.showNotificationSuccess(
+        `Anúncio ${updated ? 'atualizado' : 'cadastrado'} com sucesso!`
+      )
       setTimeout(() => router.push({ name: 'anuncios' }), 2000)
     },
     () => notificationStore.showNotificationError('Por favor, revise os campos!')
   )
+
+onBeforeMount(
+  () =>
+    props.id &&
+    store.initEdit(props.id, ({ imagem }) => {
+      imgFile.value = base64ToFile(imagem.base64, imagem.nome, imagem.tipo)
+    })
+)
 
 onUnmounted(() => store.destroy())
 </script>

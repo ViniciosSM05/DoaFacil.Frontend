@@ -1,8 +1,9 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { clone, cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash'
 import { useAnuncioApi } from '../api/anuncio-api'
 import type { AnuncioFormState } from '../types/AnuncioFormState'
+import type { AnuncioEdit } from '../types/AnuncioEdit'
 
 const STORE_NAME = 'anuncioForm'
 export const useAnuncioFormStore = defineStore(STORE_NAME, () => {
@@ -39,15 +40,15 @@ export const useAnuncioFormStore = defineStore(STORE_NAME, () => {
 
   const setFormImagemTipo = (tipo: string | null) => (state.value.form.imagem.tipo = tipo)
 
-  const add = (callbackSuccess?: () => void, callbackError?: () => void) => {
+  const add = (callbackSuccess?: (updated: boolean) => void, callbackError?: () => void) => {
     state.value.loadingAdd = true
     api
       .add(state.value.form)
       .then(({ data }) => {
         state.value.errors = []
         if (data.success) {
+          callbackSuccess && callbackSuccess(!!state.value.form.id)
           destroy()
-          callbackSuccess && callbackSuccess()
         }
       })
       .catch((resp) => {
@@ -55,6 +56,35 @@ export const useAnuncioFormStore = defineStore(STORE_NAME, () => {
         callbackError && callbackError()
       })
       .finally(() => (state.value.loadingAdd = false))
+  }
+
+  const initEdit = (anuncioId: string, callbackSuccess?: (anuncio: AnuncioEdit) => void) => {
+    api
+      .getEdit(anuncioId)
+      .then(({ data }) => {
+        if (data.data) {
+          const { categoriaId, chavePix, descricao, id, imagem, meta, titulo } = data.data
+          state.value = {
+            ...state.value,
+            form: {
+              categoriaId,
+              chavePix,
+              descricao,
+              id,
+              meta,
+              titulo,
+              imagem: {
+                base64: imagem.base64,
+                nome: imagem.nome,
+                principal: imagem.principal,
+                tipo: imagem.tipo
+              }
+            }
+          }
+          callbackSuccess && callbackSuccess(data.data)
+        }
+      })
+      .catch(console.error)
   }
 
   const destroy = () => (state.value = cloneDeep(_defaultState))
@@ -66,6 +96,7 @@ export const useAnuncioFormStore = defineStore(STORE_NAME, () => {
     setFormImagemNome,
     setFormImagemTipo,
     add,
+    initEdit,
     destroy
   }
 })
