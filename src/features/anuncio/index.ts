@@ -8,6 +8,7 @@ import { useAnuncioFormStore } from './store/anuncio-form-store'
 import type { CardAnuncioProps } from './types/CardAnuncioProps'
 import type { AnuncioFiltro } from './types/AnuncioFiltro'
 import type { AnuncioData } from './types/AnuncioData'
+import type { AnuncioDetalhes } from './types/AnuncioDetalhes'
 
 export {
   CardAnuncio,
@@ -19,5 +20,6 @@ export {
   useAnuncioListagemStore,
   type CardAnuncioProps,
   type AnuncioFiltro,
-  type AnuncioData
+  type AnuncioData,
+  type AnuncioDetalhes
 }

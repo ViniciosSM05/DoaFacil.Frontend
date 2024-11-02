@@ -10,8 +10,6 @@
           <v-btn variant="text" to="/">Home</v-btn>
           <v-btn variant="text" :to="{ name: 'cadastrarAnuncio' }">Criar anúncio</v-btn>
           <v-btn variant="text" to="/anuncios">Anúncios</v-btn>
-          <v-btn variant="text" to="/sobre">Sobre</v-btn>
-          <v-btn variant="text" to="/contato">Contato</v-btn>
           <v-btn variant="text" class="d-flex align-center">
             <v-icon class="mr-1">mdi-account</v-icon>
             <span>{{ generalStore.user?.nome ?? '' }}</span>

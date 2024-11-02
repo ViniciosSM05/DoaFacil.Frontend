@@ -7,6 +7,7 @@ import UserLoginView from '@/views/user-login/UserLoginView.vue'
 import HomeView from '@/views/home/HomeView.vue'
 import ListagemAnunciosView from '@/views/listagem-anuncios/ListagemAnunciosView.vue'
 import CadastrarAnuncioView from '@/views/cadastrar-anuncio/CadastrarAnuncioView.vue'
+import DoacaoView from '@/views/doacao/DoacaoView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -70,6 +71,21 @@ const router = createRouter({
           path: '',
           name: 'cadastrarAnuncio',
           component: CadastrarAnuncioView,
+          meta: { requiresAuth: true }
+        }
+      ]
+    },
+    {
+      path: '/doacao/:anuncioId',
+      component: LayoutAuthenticated,
+      meta: {
+        backgroundColor: '#F9F9F9'
+      },
+      children: [
+        {
+          path: '',
+          name: 'doacao',
+          component: DoacaoView,
           meta: { requiresAuth: true }
         }
       ]

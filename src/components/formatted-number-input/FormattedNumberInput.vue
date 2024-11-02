@@ -12,6 +12,11 @@
     />
   </div>
 </template>
+<style scoped lang="less">
+.formatted-number-input {
+  width: 100%;
+}
+</style>
 
 <script setup lang="ts">
 import { ref, watch, defineProps, defineEmits } from 'vue'

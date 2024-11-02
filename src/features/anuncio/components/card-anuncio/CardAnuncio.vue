@@ -1,14 +1,26 @@
 <template>
   <div class="card-anuncio">
     <v-card class="info-card" max-width="400">
-      <v-img :src="imagemBase64" height="200px" class="anuncio-img">
+      <v-img
+        :src="imagemBase64"
+        height="200px"
+        class="anuncio-img"
+        @click="
+          $router.push({
+            name: 'doacao',
+            params: {
+              anuncioId: id
+            }
+          })
+        "
+      >
         <v-btn
           v-show="anuncioPessoal"
           icon
           class="edit-button"
           elevation="2"
           color="primary"
-          @click="
+          @click.stop="
             $router.push({
               name: 'cadastrarAnuncio',
               params: {

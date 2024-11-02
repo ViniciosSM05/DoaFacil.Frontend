@@ -4,6 +4,7 @@ import type { AnuncioToSave } from '../types/AnuncioFormState'
 import type { AnuncioFiltro } from '../types/AnuncioFiltro'
 import type { AnuncioData } from '../types/AnuncioData'
 import type { AnuncioEdit } from '../types/AnuncioEdit'
+import type { AnuncioDetalhes } from '../types/AnuncioDetalhes'
 
 export const useAnuncioApi = () => {
   const http = useHttpService('anuncios')
@@ -14,9 +15,12 @@ export const useAnuncioApi = () => {
 
   const getEdit = (id: string) => http.get<ResponseApiT<AnuncioEdit>>(id)
 
+  const getDetalhes = (id: string) => http.get<ResponseApiT<AnuncioDetalhes>>(`detalhes/${id}`)
+
   return {
     add,
     get,
-    getEdit
+    getEdit,
+    getDetalhes
   }
 }

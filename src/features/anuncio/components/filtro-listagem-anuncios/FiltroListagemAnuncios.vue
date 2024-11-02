@@ -31,16 +31,18 @@
           @change="store.setFiltroCategoriaId($event ?? null)"
         />
       </v-col>
-      <v-col md="3">
-        <v-btn
-          @click="limparFiltros"
-          color="secondary"
-          outlined
-          class="d-flex align-center btn-limpar-filtros"
-        >
-          <v-icon start class="mr-1">mdi-trash-can-outline</v-icon>
-          Limpar Filtros
-        </v-btn>
+      <v-col md="2">
+        <v-checkbox
+          v-model="store.state.filtro.somenteAnuncioPessoal"
+          color="primary"
+          label="Meus anúncios"
+        />
+      </v-col>
+      <v-col md="1">
+        <a class="mt-5 limpar-filtros" @click="limparFiltros">
+          <v-icon color="primary" start class="mr-1">mdi-trash-can-outline</v-icon>
+          Limpar
+        </a>
       </v-col>
     </v-row>
   </div>
@@ -85,6 +87,11 @@ watch(
       1000
     )
   }
+)
+
+watch(
+  () => store.state.filtro.somenteAnuncioPessoal,
+  () => !bloquearRefreshByWatch.value && store.refreshAnuncios()
 )
 
 const limparFiltros = () => {
