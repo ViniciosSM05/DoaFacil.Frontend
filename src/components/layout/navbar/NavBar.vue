@@ -3,8 +3,9 @@
     <v-app-bar color="white" elevation="2">
       <v-container fluid class="centered container-nav">
         <v-row align="center" justify="space-between">
-          <v-app-bar-title>
-            <span class="font-weight-bold">Doa Fácil</span>
+          <v-app-bar-title class="container-logo-title" @click="$router.push('/')">
+            <img src="../../../assets/png/logo.png" height="70" width="70" />
+            <span class="font-weight-bold title">Doa Fácil</span>
           </v-app-bar-title>
 
           <v-btn variant="text" to="/">Home</v-btn>
@@ -20,7 +21,7 @@
     </v-app-bar>
   </div>
 </template>
-<style lang="less" scoped src="./navbar.less"></style>
+<style lang="less" src="./navbar.less"></style>
 <script setup lang="ts">
 import { useGeneralStore } from '@/stores/general/general-store'
 

@@ -41,7 +41,7 @@
 <style lang="less" scoped src="./doacao-view-.less"></style>
 
 <script setup lang="ts">
-import { computed, onBeforeMount } from 'vue'
+import { computed, onBeforeMount, onUnmounted } from 'vue'
 import {
   DoacaoAnuncioHeader,
   DoacaoAnuncioDetalhes,
@@ -56,4 +56,5 @@ const route = useRoute()
 const anuncio = computed(() => store.state.anuncio)
 
 onBeforeMount(() => store.init((route.params?.anuncioId ?? '').toString()))
+onUnmounted(() => store.destroy())
 </script>
