@@ -10,9 +10,8 @@
 <style scoped lang="less" src="./doacao-anuncio-header.less"></style>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import { insertZeroBefore } from '@/utils/number.utils'
 import type { DoacaoAnuncioHeaderProps } from '../../types/DoacaoAnuncioHeaderProps'
 
-const props = defineProps<DoacaoAnuncioHeaderProps>()
+defineProps<DoacaoAnuncioHeaderProps>()
 </script>

@@ -13,9 +13,8 @@
 <style scoped lang="less" src="./doacao-anuncio-sobre.less"></style>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import type { DoacaoAnuncioSobreProps } from '../../types/DoacaoAnuncioSobreProps'
 import moment from 'moment'
 
-const props = defineProps<DoacaoAnuncioSobreProps>()
+defineProps<DoacaoAnuncioSobreProps>()
 </script>

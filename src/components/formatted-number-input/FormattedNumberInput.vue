@@ -19,7 +19,7 @@
 </style>
 
 <script setup lang="ts">
-import { ref, watch, defineProps, defineEmits } from 'vue'
+import { ref, watch, defineEmits } from 'vue'
 import type { FormattedNumberInputProps } from './types/FormattedNumberInputProps'
 
 const props = withDefaults(defineProps<FormattedNumberInputProps>(), {

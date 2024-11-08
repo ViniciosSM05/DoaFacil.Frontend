@@ -35,7 +35,6 @@
 <script setup lang="ts">
 import { formatCurrency } from '@/utils/currency.utils'
 import { computed } from 'vue'
-import { defineProps } from 'vue'
 import { useDoacaoStore } from '../../store/doacao-store'
 import { useErrorFiedService } from '@/services/error-field/error-field-service'
 import { useNotificationStore } from '@/stores/notification/notification-store'
