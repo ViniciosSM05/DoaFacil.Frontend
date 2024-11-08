@@ -2,6 +2,7 @@
   <div class="card-anuncio">
     <v-card class="info-card" max-width="400">
       <v-img
+        cover
         :src="imagemBase64"
         height="200px"
         class="anuncio-img"
@@ -66,7 +67,7 @@
     </v-card>
   </div>
 </template>
-<style scoped lang="less" src="./card-anuncio.less"></style>
+<style lang="less" src="./card-anuncio.less"></style>
 
 <script setup lang="ts">
 import { formatCurrency } from '@/utils/currency.utils'

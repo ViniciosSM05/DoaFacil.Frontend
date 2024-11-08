@@ -10,7 +10,7 @@
       <v-row class="mt-4" align="start">
         <v-col md="8" class="col-imagens d-flex justify-center">
           <v-card class="container-imagem pa-4">
-            <v-img :src="anuncio.imagemBase64" class="anuncio-img" />
+            <v-img cover :src="anuncio.imagemBase64" class="anuncio-img" />
           </v-card>
         </v-col>
         <v-col md="4" class="col-detalhes d-flex justify-center">
